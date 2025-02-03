@@ -1,5 +1,5 @@
 MAX_STRIKES = 6
-SECRET_WORD = 'BALLS'
+SECRET_WORD = 'MOXIE'
 
 def make_guess_word():
     guess_word = []
@@ -7,9 +7,9 @@ def make_guess_word():
         guess_word.append('_')
     return guess_word
 
-def print_current_word(letters_remaining):
-    for letter in SECRET_WORD:
-        if 
+# def print_current_word(letters_remaining):
+#     for letter in SECRET_WORD:
+#         if 
 
 def hangman():
     strikes = 0
@@ -22,7 +22,8 @@ def hangman():
         if guess_letter in letters_remaining:
             letters_remaining.remove(guess_letter)
 
-            print_current_word(letters_remaining)
+            print(f'{guess_letter} is part of the secret word!')
+            # print_current_word(letters_remaining)
             
             if len(letters_remaining) <= 0:
                 game_over = True
@@ -35,10 +36,6 @@ def hangman():
                 print('Sorry, try again :(')
             print(f'Num Strikes: {strikes}')
         
-        
     
 hangman()
 
-# poop = list(SECRET_WORD)
-# poop.remove('L')
-# print(poop)
