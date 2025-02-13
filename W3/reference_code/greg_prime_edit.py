@@ -78,4 +78,3 @@ end = time.time()
 print(f'Time to get {N}th prime: {end - start}')
 # 2000000th Prime = 32,452,843
 # Time to get 2000000th prime: 60.06425404548645
-

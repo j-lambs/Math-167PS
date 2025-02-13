@@ -13,7 +13,8 @@ print("Welcome to hangman!")
 # Converts string to a list for better searching
 word_to_guess = list(input("Enter a word "))
 
-os.system('clear') #clear the screen to hide the word to guess
+#clear the screen to hide the word to guess
+os.system('clear') 
 
 # keep word_to_guess static, but remove correct letters from letters_left_to_guess
 letters_left_to_guess = word_to_guess.copy()
