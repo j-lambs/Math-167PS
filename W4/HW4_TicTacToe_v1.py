@@ -43,10 +43,17 @@ def check_for_winner(board, letter: str):
         if len(set(col)) == 1:
             return True
 
-    # diagonal
+    # diagonal up -> down
     diag = []
     for i in range(len(board)):
         diag.append(board[i][i])
+    if len(set(diag)) == 1:
+        return True
+
+    # diagonal down -> up
+    diag = []
+    for i in range(len(board)):
+        diag.append(board[i][len(board) - 1 - i])
     if len(set(diag)) == 1:
         return True
 
