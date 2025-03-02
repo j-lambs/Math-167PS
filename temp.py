@@ -1,19 +1,14 @@
-import random as r
+j = (1,2,3)
+j = list(j)
+j[0] = 0
+j = tuple(j)
+print(j)
 
-clist = [1,2,3,4,5]
+d = dict()
+d.update({j: [100,100]})
+print(d)
 
-print(r.sample(population=clist, k=2))
+sec = d.get(j)
+d.update({})
 
-print(clist)
 
-s = set()
-s.add(1)
-s.add(2)
-s.add(3)
-s.add(4)
-s.add(5)
-
-print(r.sample(population=list(s), k = 2)[0])
-print(s)
-
-print(r.randint(0,1))
