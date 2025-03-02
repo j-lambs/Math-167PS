@@ -1,4 +1,3 @@
-import os
 import random
 
 def initialize_board():
@@ -7,6 +6,7 @@ def initialize_board():
 def print_current_board(board):
     for row in board:
         print(row)
+    print()
 
 def get_elt_value(pos: int, board):
     if pos >= 1 and pos <= 3:
@@ -72,8 +72,15 @@ def is_cat_game(board):
     else:
         return False
 
+def initialize_spots_remaining():
+    my_set = set()
+    for i in range(1, 10):
+        my_set.add(i)
+    return my_set
+
 def tictactoe_pvp():
     board = initialize_board()
+    spots_remaining = initialize_spots_remaining()
     print_current_board(board)
     
     game_over = False
@@ -83,7 +90,8 @@ def tictactoe_pvp():
         if turn_counter % 2 == 1:
             letter = 'X'
             x_pos = int(input('What position would X like to place?\n'))
-            if position_is_valid(x_pos, board):
+            if x_pos in spots_remaining:
+                spots_remaining.remove(x_pos)
                 redraw_position(x_pos, letter, board)
                 if check_for_winner(board, letter) is True:
                     print(f'Congratulations, {letter} wins!')
@@ -95,11 +103,13 @@ def tictactoe_pvp():
                     turn_counter += 1
             else:
                 print('Try again. Enter valid position.')
+                print(f'Valid Positions: {spots_remaining}')
         # evens are O's turns
         else:
             letter = 'O'
             y_pos = input('What position would O like to place?\n')
-            if position_is_valid(y_pos, board):
+            if y_pos in spots_remaining:
+                spots_remaining.remove(y_pos)
                 redraw_position(y_pos, letter, board)
                 if check_for_winner(board, letter) is True:
                     print(f'Congratulations, {letter} wins!')
@@ -111,20 +121,28 @@ def tictactoe_pvp():
                     turn_counter += 1
             else:
                 print('Try again. Enter valid position.')
+                print(f'Valid Positions: {spots_remaining}')
         print_current_board(board)
 
-def tictactoe_human_com():
+def tictactoe_pve():
     board = initialize_board()
+    spots_remaining = initialize_spots_remaining()
     print_current_board(board)
-    
     game_over = False
-    turn_counter = 1
+
+    turn_counter = random.randint(0, 1)
+    if turn_counter == 1:
+        print('You won the coin flip! You go first.')
+    else:
+        print('Computer goes first.')
+
     while (game_over is False):
-        # odds are X's turns
+        # odds are X's turns (HUMAN)
         if turn_counter % 2 == 1:
             letter = 'X'
             x_pos = int(input('What position would X like to place?\n'))
-            if position_is_valid(x_pos, board):
+            if x_pos in spots_remaining:
+                spots_remaining.remove(x_pos)
                 redraw_position(x_pos, letter, board)
                 if check_for_winner(board, letter) is True:
                     print(f'Congratulations, {letter} wins!')
@@ -136,24 +154,28 @@ def tictactoe_human_com():
                     turn_counter += 1
             else:
                 print('Try again. Enter valid position.')
-        # evens are O's turns
+                print(f'Valid Positions: {spots_remaining}')
+        # evens are O's turns (COMPUTER)
         else:
             letter = 'O'
-            y_pos = random.randint(1, 9)
-            if position_is_valid(y_pos, board):
-                redraw_position(y_pos, letter, board)
-                if check_for_winner(board, letter) is True:
-                    print(f'Congratulations, {letter} wins!')
-                    game_over = True
-                elif is_cat_game(board) is True:
-                    print('Tie! No winner today.')
-                    game_over = True
-                else:
-                    turn_counter += 1
+            y_pos = random.sample(population=list(spots_remaining), k=1)[0]
+            spots_remaining.remove(y_pos)
+            print(f'Computer plays position {y_pos}')
+
+            redraw_position(y_pos, letter, board)
+            if check_for_winner(board, letter) is True:
+                print(f'Congratulations, {letter} wins!')
+                game_over = True
+            elif is_cat_game(board) is True:
+                print('Tie! No winner today.')
+                game_over = True
+            else:
+                turn_counter += 1
         print_current_board(board)
 
 def tictactoe_com_com():
     board = initialize_board()
+    spots_remaining = initialize_spots_remaining()
     print_current_board(board)
     
     game_over = False
@@ -162,45 +184,46 @@ def tictactoe_com_com():
         # odds are X's turns
         if turn_counter % 2 == 1:
             letter = 'X'
-            x_pos = random.randint(1, 9)
-            if position_is_valid(x_pos, board):
-                redraw_position(x_pos, letter, board)
-                if check_for_winner(board, letter) is True:
-                    print(f'Congratulations, {letter} wins!')
-                    input('Holdup partner X WINS')
-                    game_over = True
-                elif is_cat_game(board) is True:
-                    print('Tie! No winner today.')
-                    game_over = True
-                else:
-                    turn_counter += 1
+            x_pos = random.sample(population=list(spots_remaining), k=1)[0]
+            spots_remaining.remove(x_pos)
+            
+            redraw_position(x_pos, letter, board)
+            if check_for_winner(board, letter) is True:
+                print(f'Congratulations, {letter} wins!')
+                input('Holdup partner X WINS')
+                game_over = True
+            elif is_cat_game(board) is True:
+                print('Tie! No winner today.')
+                game_over = True
+            else:
+                turn_counter += 1
         # evens are O's turns
         else:
             letter = 'O'
-            y_pos = random.randint(1, 9)
-            if position_is_valid(y_pos, board):
-                redraw_position(y_pos, letter, board)
-                if check_for_winner(board, letter) is True:
-                    print(f'Congratulations, {letter} wins!')
-                    input('Holdup partner O WINS')
-                    game_over = True
-                elif is_cat_game(board) is True:
-                    print('Tie! No winner today.')
-                    game_over = True
-                else:
-                    turn_counter += 1
+            y_pos = random.sample(population=list(spots_remaining), k=1)[0]
+            spots_remaining.remove(y_pos)
+
+            redraw_position(y_pos, letter, board)
+            if check_for_winner(board, letter) is True:
+                print(f'Congratulations, {letter} wins!')
+                input('Holdup partner O WINS')
+                game_over = True
+            elif is_cat_game(board) is True:
+                print('Tie! No winner today.')
+                game_over = True
+            else:
+                turn_counter += 1
         print_current_board(board)
 
 def menu():
     game_over = False
     while game_over is False:
-        os.system('clear')
         print('Welcome to Tic Tac Toe!')
         result = input('1) Play Human v. Human\n2) Play Human v. Computer.\n3) Computer v. Computer\n4) Exit Game\n')
         if result == '1':
             tictactoe_pvp()
         elif result == '2':
-            tictactoe_human_com()
+            tictactoe_pve()
         elif result == '3':
             tictactoe_com_com()
         elif result == '4':

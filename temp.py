@@ -1,17 +1,19 @@
-def print_current_board(board):
-    for row in board:
-        print(row)
+import random as r
 
-def vert(a):
-    for j in range(len(a)):
-        for i in range(len(a)):
-            print(a[i][j])
+clist = [1,2,3,4,5]
 
-a = [[1,2,3],[4,5,6],[7,8,9]]
+print(r.sample(population=clist, k=2))
 
-x = 0
-typeofx = type(x)
-if isinstance(x, int):
-    print('hi')
-if isinstance(x, str):
-    print('no')
+print(clist)
+
+s = set()
+s.add(1)
+s.add(2)
+s.add(3)
+s.add(4)
+s.add(5)
+
+print(r.sample(population=list(s), k = 2)[0])
+print(s)
+
+print(r.randint(0,1))
